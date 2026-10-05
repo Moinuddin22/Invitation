@@ -11,6 +11,7 @@ class Rsvp(Base):
     __tablename__ = "rsvps"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    event: Mapped[str] = mapped_column(String(30), index=True)
     full_name: Mapped[str] = mapped_column(String(120))
     email: Mapped[str | None] = mapped_column(String(200), nullable=True)
     phone: Mapped[str | None] = mapped_column(String(30), nullable=True)

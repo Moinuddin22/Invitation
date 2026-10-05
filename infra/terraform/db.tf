@@ -24,23 +24,23 @@ resource "aws_db_subnet_group" "this" {
 }
 
 resource "aws_db_instance" "this" {
-  identifier             = local.name
-  engine                 = "postgres"
-  engine_version         = "16"
-  instance_class         = var.db_instance_class
-  allocated_storage      = 20
-  storage_encrypted      = true
-  db_name                = "invitation"
-  username               = "invite_admin"
-  password               = random_password.db.result
-  db_subnet_group_name   = aws_db_subnet_group.this.name
-  vpc_security_group_ids = [aws_security_group.db.id]
-  publicly_accessible    = false
-  backup_retention_period = 7
-  skip_final_snapshot    = false
+  identifier                = local.name
+  engine                    = "postgres"
+  engine_version            = "16"
+  instance_class            = var.db_instance_class
+  allocated_storage         = 20
+  storage_encrypted         = true
+  db_name                   = "invitation"
+  username                  = "invite_admin"
+  password                  = random_password.db.result
+  db_subnet_group_name      = aws_db_subnet_group.this.name
+  vpc_security_group_ids    = [aws_security_group.db.id]
+  publicly_accessible       = false
+  backup_retention_period   = 7
+  skip_final_snapshot       = false
   final_snapshot_identifier = "${local.name}-final"
-  deletion_protection    = true
-  tags                   = local.tags
+  deletion_protection       = true
+  tags                      = local.tags
 }
 
 resource "aws_secretsmanager_secret" "db_url" {

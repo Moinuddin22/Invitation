@@ -1,4 +1,5 @@
-/* Invitation interactions: doors, petals, reveal, countdown, RSVP UX. */
+/* Invitation interactions: intro, petals, stars, reveal, countdown, RSVP UX.
+   Theme-agnostic: themes opt in via data attributes. */
 (() => {
   "use strict";
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -27,10 +28,11 @@
 
   /* ---------- Falling petals ---------- */
   const petalHost = $("#petals");
+  const petalKind = document.body.dataset.petals === "jasmine" ? "jasmine" : "";
   function spawnPetal() {
     if (!petalHost || reducedMotion) return;
     const p = document.createElement("span");
-    p.className = Math.random() < 0.3 ? "petal gold" : "petal";
+    p.className = Math.random() < 0.3 ? "petal gold" : `petal ${petalKind}`;
     p.style.left = `${Math.random() * 100}vw`;
     p.style.setProperty("--drift", `${(Math.random() - 0.5) * 200}px`);
     p.style.animationDuration = `${6 + Math.random() * 6}s`;
@@ -44,6 +46,21 @@
     if (reducedMotion) return;
     const isSmall = window.innerWidth < 640;
     setInterval(spawnPetal, isSmall ? 1400 : 800);
+  }
+
+  /* ---------- Twinkling stars (only where a theme asks for them) ---------- */
+  function initStars() {
+    const host = $("[data-stars]");
+    if (!host) return;
+    const count = Number(host.dataset.stars) || 30;
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement("span");
+      s.className = "star";
+      s.style.left = `${Math.random() * 100}%`;
+      s.style.top = `${Math.random() * 70}%`;
+      s.style.animationDelay = `${-Math.random() * 3}s`;
+      host.appendChild(s);
+    }
   }
 
   /* ---------- Scroll reveal ---------- */
@@ -119,6 +136,7 @@
     $("#main")?.setAttribute("tabindex", "-1");
     initIntro();
     initPetals();
+    initStars();
     initReveal();
     initCountdown();
     initRsvp();

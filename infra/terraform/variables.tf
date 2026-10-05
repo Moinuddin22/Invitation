@@ -23,8 +23,14 @@ variable "db_instance_class" {
   default = "db.t4g.micro"
 }
 
-variable "app_env" {
-  description = "Wedding detail overrides passed to the container (WEDDING_DATE_DISPLAY, VENUE_NAME, ...)"
-  type        = map(string)
-  default     = {}
+variable "domain_name" {
+  description = "Domain bought in Route 53, e.g. harisweds.com. Leave empty to use the default App Runner URL."
+  type        = string
+  default     = ""
+}
+
+variable "subdomain" {
+  description = "Host the app is served on, e.g. www -> www.harisweds.com"
+  type        = string
+  default     = "www"
 }

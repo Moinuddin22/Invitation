@@ -86,9 +86,8 @@ resource "aws_apprunner_service" "app" {
       image_repository_type = "ECR"
       image_identifier      = "${aws_ecr_repository.app.repository_url}:${var.image_tag}"
       image_configuration {
-        port                          = "8000"
-        runtime_environment_variables = var.app_env
-        runtime_environment_secrets   = { DATABASE_URL = aws_secretsmanager_secret.db_url.arn }
+        port                        = "8000"
+        runtime_environment_secrets = { DATABASE_URL = aws_secretsmanager_secret.db_url.arn }
       }
     }
   }

@@ -1,0 +1,85 @@
+/* Valima theme: Nizami Hyderabad - emerald & gold, wax-sealed envelope,
+   Charminar skyline, jasmine garland, starry night */
+.theme-valima {
+  --bg-deep: #04190f;
+  --bg-mid: #0a3324;
+  --bg-glow: rgba(15,90,67,.55);
+  --tile-bg: rgba(15,90,67,.4);
+  --panel-ink: #0a3324;
+  --font-script: "Pinyon Script", cursive;
+  --font-display: "Marcellus", serif;
+  --font-title: "Marcellus SC", serif;
+  --pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23d4af37' stroke-opacity='.07'%3E%3Ccircle cx='48' cy='48' r='30'/%3E%3Ccircle cx='0' cy='0' r='30'/%3E%3Ccircle cx='96' cy='0' r='30'/%3E%3Ccircle cx='0' cy='96' r='30'/%3E%3Ccircle cx='96' cy='96' r='30'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Mughal-arch shaped card instead of a rectangle */
+.theme-valima .card-frame {
+  border-radius: 50% 50% var(--radius) var(--radius) / clamp(80px, 18vw, 180px) clamp(80px, 18vw, 180px) var(--radius) var(--radius);
+  padding-top: clamp(4rem, 12vw, 7rem);
+}
+.theme-valima .card-frame::before, .theme-valima .card-frame::after { display: none; }
+
+/* ---------- Envelope intro ---------- */
+.theme-valima .intro {
+  background: radial-gradient(ellipse at center, var(--bg-mid), var(--bg-deep));
+  transition: opacity .8s ease 1.4s;
+}
+.theme-valima .intro.opening { opacity: 0; }
+.envelope { position: relative; width: min(84vw, 400px); aspect-ratio: 3 / 2; margin: 2rem auto 0; perspective: 1000px; }
+.env-back, .env-front, .env-flap { position: absolute; left: 0; right: 0; }
+.env-back { inset: 0; background: #0f5a43; border: 1px solid var(--accent); border-radius: 8px; }
+.env-letter {
+  position: absolute; left: 6%; right: 6%; top: 8%; bottom: 8%; z-index: 1;
+  display: grid; place-items: center; border-radius: 6px;
+  background: linear-gradient(180deg, var(--panel-light), var(--panel-light-2));
+  color: var(--panel-ink); font-family: var(--font-script); font-size: clamp(1.8rem, 7vw, 2.6rem);
+  transition: transform 1s ease .5s;
+}
+.env-front {
+  inset: 0; z-index: 2; border-radius: 8px;
+  background: linear-gradient(160deg, #136b50, #083222);
+  clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+}
+.env-flap {
+  top: 0; height: 62%; z-index: 3; transform-origin: top center;
+  background: linear-gradient(180deg, #17785a, #0c4634);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transition: transform .8s ease, z-index 0s .4s;
+}
+.btn-seal {
+  position: absolute; left: 50%; top: 62%; z-index: 4; transform: translate(-50%, -50%);
+  width: 92px; height: 92px; border-radius: 50%; cursor: pointer; border: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  color: #ffe9a8; background: radial-gradient(circle at 35% 30%, #d6404e, #8b1220 70%);
+  box-shadow: 0 0 0 4px #a5182a, 0 0 0 6px rgba(255,233,168,.35), 0 8px 20px rgba(0,0,0,.5);
+  transition: transform .5s ease, opacity .5s ease;
+}
+.btn-seal:hover { transform: translate(-50%, -50%) scale(1.06); }
+.btn-seal .monogram { font-family: var(--font-script); font-size: 1.8rem; line-height: 1; }
+.btn-seal .seal-cta { font-family: var(--font-display); font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; }
+.intro.opening .btn-seal { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+.intro.opening .env-flap { transform: rotateX(180deg); z-index: 0; }
+.intro.opening .env-letter { transform: translateY(-60%); }
+
+/* ---------- Jasmine garland ---------- */
+.garland {
+  position: fixed; top: 0; left: 0; right: 0; height: 48px; z-index: 5; pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 48'%3E%3Cpath d='M0 4Q80 52 160 4' fill='none' stroke='%23d4af37' stroke-width='1.5'/%3E%3Cg fill='%23fffdf5' stroke='%23e8dcb5'%3E%3Ccircle cx='16' cy='12.6' r='4'/%3E%3Ccircle cx='32' cy='19.4' r='4'/%3E%3Ccircle cx='48' cy='24.2' r='4'/%3E%3Ccircle cx='64' cy='27' r='4'/%3E%3Ccircle cx='96' cy='27' r='4'/%3E%3Ccircle cx='112' cy='24.2' r='4'/%3E%3Ccircle cx='128' cy='19.4' r='4'/%3E%3Ccircle cx='144' cy='12.6' r='4'/%3E%3C/g%3E%3Ccircle cx='80' cy='28' r='5' fill='%23c2183c'/%3E%3Cpath d='M80 33v9' stroke='%23d4af37'/%3E%3Ccircle cx='80' cy='44' r='2.5' fill='%23d4af37'/%3E%3C/svg%3E") repeat-x;
+  background-size: 160px 48px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.4));
+}
+
+/* ---------- Charminar skyline ---------- */
+.skyline {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 1; pointer-events: none;
+  display: flex; justify-content: center; color: #021009;
+}
+.skyline svg { width: min(100%, 900px); height: auto; aspect-ratio: 400 / 220; opacity: .9; filter: drop-shadow(0 -2px 0 rgba(212,175,55,.35)); }
+
+/* ---------- Stars ---------- */
+.stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.star {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%; background: var(--accent-light);
+  box-shadow: 0 0 6px var(--accent-light); animation: twinkle 3s ease-in-out infinite;
+}
+@keyframes twinkle { 50% { opacity: .15; transform: scale(.6); } }

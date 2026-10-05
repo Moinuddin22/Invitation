@@ -1,10 +1,6 @@
 aws_profile = "your-profile-name"
 region      = "ap-south-1"
 
-app_env = {
-  WEDDING_DATE_DISPLAY = "Saturday, 12th December 2026"
-  WEDDING_DATE_ISO     = "2026-12-12T19:00:00"
-  WEDDING_TIME_DISPLAY = "7:00 PM onwards"
-  VENUE_NAME           = "Grand Celebration Hall"
-  VENUE_ADDRESS        = "Banjara Hills, Hyderabad, Telangana, India"
-}
+# Optional: set after buying the domain in Route 53
+# domain_name = "harisweds.com"
+# subdomain   = "www"

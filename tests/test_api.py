@@ -1,4 +1,4 @@
-"""API tests - each test gets an isolated SQLite DB."""
+"""API tests - isolated SQLite DB, reset per test."""
 import os
 import tempfile
 
@@ -22,32 +22,48 @@ def client():
         yield c
 
 
-def _count() -> int:
+def _rows() -> list[Rsvp]:
     with SessionLocal() as db:
-        return db.query(Rsvp).count()
+        return db.query(Rsvp).all()
 
 
-def test_homepage_has_couple_and_map(client):
-    html = client.get("/").text
-    for needle in ("Moinuddin", "Haris", "Meher", "Mehreen", "maps.google.com", "Ar-Rum"):
-        assert needle in html
+def test_root_redirects_to_nikah(client):
+    r = client.get("/", follow_redirects=False)
+    assert r.status_code == 307 and r.headers["location"] == "/nikah"
+
+
+@pytest.mark.parametrize(
+    "slug, needles",
+    [
+        ("nikah", ["theme-nikah", "St. Mary College Hall", "Ar-Rum", "Raziuddin", "Saiful Islam"]),
+        ("valima", ["theme-valima", "Meridian Function Hall", "27th November", "Al-Furqan", "Malakpet"]),
+    ],
+)
+def test_event_pages(client, slug, needles):
+    html = client.get(f"/{slug}").text
+    for needle in ["Moinuddin", "Haris", "Meher", "Mehreen", "maps.google.com", f"/{slug}/rsvp", *needles]:
+        assert needle in html, needle
+
+
+def test_unknown_event_404(client):
+    assert client.get("/birthday").status_code == 404
+    assert client.post("/birthday/rsvp", data={"full_name": "X", "attending": "yes"}).status_code == 404
 
 
 def test_health(client):
     assert client.get("/health").json() == {"status": "ok"}
 
 
-def test_rsvp_attending_saved(client):
-    r = client.post("/rsvp", data={"full_name": "Ali Khan", "attending": "yes", "guest_count": "3"})
-    assert r.status_code == 200
+def test_rsvp_tagged_with_event(client):
+    client.post("/nikah/rsvp", data={"full_name": "Ali Khan", "attending": "yes", "guest_count": "3"})
+    r = client.post("/valima/rsvp", data={"full_name": "Ali Khan", "attending": "yes", "guest_count": "2"})
     assert "JazakAllah" in r.text
-    assert _count() == 1
+    assert sorted((x.event, x.guest_count) for x in _rows()) == [("nikah", 3), ("valima", 2)]
 
 
 def test_rsvp_declining_forces_zero_guests(client):
-    client.post("/rsvp", data={"full_name": "Sara", "attending": "no", "guest_count": "4"})
-    with SessionLocal() as db:
-        row = db.query(Rsvp).one()
+    client.post("/valima/rsvp", data={"full_name": "Sara", "attending": "no", "guest_count": "4"})
+    [row] = _rows()
     assert row.attending is False and row.guest_count == 0
 
 
@@ -60,7 +76,6 @@ def test_rsvp_declining_forces_zero_guests(client):
     ],
 )
 def test_rsvp_validation(client, data):
-    r = client.post("/rsvp", data=data)
-    assert r.status_code == 422
-    assert "Please check the form" in r.text
-    assert _count() == 0
+    r = client.post("/nikah/rsvp", data=data)
+    assert r.status_code == 422 and "Please check the form" in r.text
+    assert _rows() == []

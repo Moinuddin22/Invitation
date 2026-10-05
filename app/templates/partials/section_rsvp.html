@@ -1,10 +1,10 @@
 <section class="section" aria-labelledby="rsvp-title">
   <svg class="divider reveal" aria-hidden="true"><use href="#divider"/></svg>
   <h2 id="rsvp-title" class="section-title text-center reveal">Kindly Respond</h2>
-  <p class="font-serif text-center text-ivory/85 text-lg -mt-2 mb-6 reveal">Your presence and duas would mean the world to us.</p>
+  <p class="font-serif text-center text-ink-soft text-lg -mt-2 mb-6 reveal">Your presence and duas would mean the world to us.</p>
 
   <div id="rsvp-area" class="rsvp-panel reveal">
-    <form hx-post="/rsvp" hx-target="#rsvp-feedback" hx-swap="innerHTML" hx-disabled-elt="find button[type=submit]"
+    <form hx-post="/{{ e.slug }}/rsvp" hx-target="#rsvp-feedback" hx-swap="innerHTML" hx-disabled-elt="find button[type=submit]"
           class="grid gap-5 sm:grid-cols-2" novalidate>
       <div class="sm:col-span-2">
         <label for="full_name" class="field-label">Full name <span aria-hidden="true">*</span></label>

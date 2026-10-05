@@ -1,34 +1,27 @@
+{% macro person(p, side) -%}
+<div class="reveal reveal-{{ side }}">
+  <p class="font-script text-6xl sm:text-7xl gold-text shimmer leading-tight">{{ p.name }}</p>
+  <p class="eyebrow text-sm mt-1">( {{ p.nickname }} )</p>
+  <p class="font-serif italic text-ink-soft mt-2 text-base sm:text-lg">{{ p.parent_line }}</p>
+</div>
+{%- endmacro %}
+
 <section class="section text-center" aria-labelledby="couple-title">
   <h2 id="couple-title" class="sr-only">The Couple</h2>
   <div class="couple-grid">
-    <div class="reveal reveal-left">
-      <p class="font-script text-6xl sm:text-7xl gold-text shimmer leading-tight">{{ s.groom_name }}</p>
-      <p class="font-cinzel text-gold-light tracking-[.3em] text-sm uppercase mt-1">( {{ s.groom_nickname }} )</p>
-      <p class="font-serif italic text-ivory/80 mt-2 text-sm sm:text-base">Son of Mr. &amp; Mrs. ________</p>
-    </div>
-
+    {{ person(groom, "left") }}
     <div class="reveal ampersand-wrap" aria-hidden="true">
       <svg class="w-12 h-12 mx-auto crescent-float"><use href="#crescent"/></svg>
       <span class="font-script text-5xl gold-text">weds</span>
     </div>
-
-    <div class="reveal reveal-right">
-      <p class="font-script text-6xl sm:text-7xl gold-text shimmer leading-tight">{{ s.bride_name }}</p>
-      <p class="font-cinzel text-gold-light tracking-[.3em] text-sm uppercase mt-1">( {{ s.bride_nickname }} )</p>
-      <p class="font-serif italic text-ivory/80 mt-2 text-sm sm:text-base">Daughter of Mr. &amp; Mrs. ________</p>
-    </div>
+    {{ person(bride, "right") }}
   </div>
 
   <figure class="ayah-panel reveal mt-10">
     <blockquote>
-      <p class="arabic text-2xl sm:text-3xl leading-loose text-maroon" lang="ar" dir="rtl">
-        وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً
-      </p>
-      <p class="font-serif italic text-maroon-deep text-base sm:text-lg mt-4">
-        “And among His signs is that He created for you from yourselves mates that you may find
-        tranquillity in them; and He placed between you affection and mercy.”
-      </p>
+      <p class="arabic text-2xl sm:text-3xl leading-loose text-panel-ink" lang="ar" dir="rtl">{{ e.quote.arabic }}</p>
+      <p class="font-serif italic text-panel-ink text-base sm:text-lg mt-4">“{{ e.quote.english }}”</p>
     </blockquote>
-    <figcaption class="font-cinzel text-xs tracking-[.25em] text-maroon mt-3 uppercase">Surah Ar-Rum · 30:21</figcaption>
+    <figcaption class="font-display text-xs tracking-[.25em] text-panel-ink mt-3 uppercase">{{ e.quote.reference }}</figcaption>
   </figure>
 </section>

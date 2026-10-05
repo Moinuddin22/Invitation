@@ -1,19 +1,18 @@
-"""FastAPI entrypoint for the wedding invitation."""
+"""FastAPI entrypoint: one app, one DB, one link per event (/nikah, /valima)."""
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Annotated
-from urllib.parse import quote_plus
 
-from fastapi import Depends, FastAPI, Form, Request
-from fastapi.responses import HTMLResponse
+from fastapi import Depends, FastAPI, Form, HTTPException, Request
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import ValidationError
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
-from app.config import Settings, get_settings
 from app.db import Base, engine, get_db
+from app.events import BRIDE, DEFAULT_EVENT, EVENTS, GROOM, Event
 from app.models import Rsvp
 from app.schemas import RsvpIn
 
@@ -27,31 +26,43 @@ async def lifespan(_: FastAPI):
     yield
 
 
-app = FastAPI(title="Haris & Mehreen - Wedding Invitation", lifespan=lifespan)
+app = FastAPI(title="Haris & Mehreen - Wedding Invitations", lifespan=lifespan)
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 templates = Jinja2Templates(directory=BASE_DIR / "templates")
+templates.env.globals.update(groom=GROOM, bride=BRIDE)
 
-SettingsDep = Annotated[Settings, Depends(get_settings)]
+
+def get_event(slug: str) -> Event:
+    if slug not in EVENTS:
+        raise HTTPException(status_code=404, detail="Invitation not found")
+    return EVENTS[slug]
+
+
+EventDep = Annotated[Event, Depends(get_event)]
 DbDep = Annotated[Session, Depends(get_db)]
 
 
-@app.get("/", response_class=HTMLResponse)
-def invitation(request: Request, settings: SettingsDep):
-    q = quote_plus(settings.map_query)
-    return templates.TemplateResponse(
-        request,
-        "index.html",
-        {
-            "s": settings,
-            "map_embed_url": f"https://maps.google.com/maps?q={q}&output=embed",
-            "map_link_url": f"https://www.google.com/maps/search/?api=1&query={q}",
-        },
-    )
+# Fixed paths first - /{slug} would otherwise swallow them.
+@app.get("/health")
+def health(db: DbDep):
+    db.execute(text("SELECT 1"))
+    return {"status": "ok"}
 
 
-@app.post("/rsvp", response_class=HTMLResponse)
+@app.get("/")
+def root():
+    return RedirectResponse(f"/{DEFAULT_EVENT}")
+
+
+@app.get("/{slug}", response_class=HTMLResponse)
+def invitation(request: Request, event: EventDep):
+    return templates.TemplateResponse(request, "index.html", {"e": event})
+
+
+@app.post("/{slug}/rsvp", response_class=HTMLResponse)
 def submit_rsvp(
     request: Request,
+    event: EventDep,
     db: DbDep,
     full_name: Annotated[str, Form()] = "",
     email: Annotated[str, Form()] = "",
@@ -61,6 +72,8 @@ def submit_rsvp(
     message: Annotated[str, Form()] = "",
 ):
     try:
+        if attending not in {"yes", "no"}:
+            raise ValueError("Please tell us whether you can attend.")
         data = RsvpIn(
             full_name=full_name,
             email=email,
@@ -69,8 +82,6 @@ def submit_rsvp(
             guest_count=guest_count if attending == "yes" else 0,
             message=message,
         )
-        if attending not in {"yes", "no"}:
-            raise ValueError("Please tell us whether you can attend.")
     except (ValidationError, ValueError) as exc:
         errors = (
             [f"{e['loc'][0].replace('_', ' ').title()}: {e['msg']}" for e in exc.errors()]
@@ -81,14 +92,6 @@ def submit_rsvp(
             request, "partials/rsvp_error.html", {"errors": errors}, status_code=422
         )
 
-    db.add(Rsvp(**data.model_dump()))
+    db.add(Rsvp(event=event.slug, **data.model_dump()))
     db.commit()
-    return templates.TemplateResponse(
-        request, "partials/rsvp_thanks.html", {"rsvp": data}
-    )
-
-
-@app.get("/health")
-def health(db: DbDep):
-    db.execute(text("SELECT 1"))
-    return {"status": "ok"}
+    return templates.TemplateResponse(request, "partials/rsvp_thanks.html", {"rsvp": data})
