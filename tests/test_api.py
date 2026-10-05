@@ -98,3 +98,9 @@ def test_parents_titled_mr_mrs(client, slug):
     assert "Janab" not in html
     assert "Son of Mr. &amp; Mrs. Raziuddin" in html
     assert "Daughter of Mr. &amp; Mrs. Saiful Islam" in html
+
+
+def test_nikah_cover_has_urdu_calligraphy(client):
+    html = client.get("/nikah").text
+    assert "nk-calli" in html and "حارث" in html and "مہرین" in html
+    assert "nk-star" not in html

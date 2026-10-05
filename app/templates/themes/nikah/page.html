@@ -1,30 +1,38 @@
 {% extends "base.html" %}
 {% block head %}
 <meta name="theme-color" content="#f7f3ec">
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Italiana&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Italiana&family=Pinyon+Script&family=Noto+Nastaliq+Urdu:wght@700&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% macro rule() -%}
 <div class="nk-rule reveal" aria-hidden="true"><span></span><i></i><span></span></div>
 {%- endmacro %}
 
-{%- macro star(cls) -%}
-<svg class="nk-star {{ cls }}" viewBox="0 0 200 200" aria-hidden="true">
-  <path class="s1" d="M58 58h84v84H58Z"/>
-  <path class="s1" d="M100 41l59 59-59 59-59-59Z"/>
-  <circle class="s2" cx="100" cy="100" r="30"/>
-  <path class="s2" d="M100 0v34M100 166v34M0 100h34M166 100h34"/>
-  <circle class="dot" cx="100" cy="100" r="3.5"/>
+{#- Names in Nastaliq calligraphy. gid must be unique per use (SVG gradient ids are document-global). -#}
+{%- macro calligraphy(cls, gid) -%}
+<svg class="nk-calli {{ cls }}" viewBox="0 0 640 300" aria-hidden="true">
+  <defs>
+    <linearGradient id="{{ gid }}" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8a6a35"/><stop offset=".42" stop-color="#9c7a45"/>
+      <stop offset=".5" stop-color="#ecd9ae"/><stop offset=".58" stop-color="#9c7a45"/>
+      <stop offset="1" stop-color="#8a6a35"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="-1 0;1 0;1 0"
+                        keyTimes="0;.3;1" dur="7s" begin="4.6s" repeatCount="indefinite"/>
+    </linearGradient>
+  </defs>
+  <text x="320" y="185" text-anchor="middle" fill="url(#{{ gid }})" lang="ur" direction="rtl">{{ groom.name_calligraphy }} <tspan class="wa">و</tspan> {{ bride.name_calligraphy }}</text>
+  <path class="fl" d="M300 268H150M340 268h150"/>
+  <path class="fl-dot" d="M320 261l7 7-7 7-7-7Z"/>
 </svg>
 {%- endmacro %}
 
 {% block body %}
-{# ---------- Cover: Rub el Hizb star line-drawing, names below ---------- #}
+{# ---------- Cover: names in gold Nastaliq calligraphy, traced then inked ---------- #}
 <div id="intro" class="intro nk-intro" role="dialog" aria-modal="true" aria-labelledby="intro-title">
   <div class="nk-cover">
     <p class="arabic nk-cover-bism" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
 
-    {{ star("nk-star-lg") }}
+    {{ calligraphy("nk-calli-lg nk-calli-anim", "nk-gold-cover") }}
 
     <div class="nk-cover-text">
       <p class="nk-eyebrow">The Nikah of</p>
@@ -116,8 +124,8 @@
       <p class="arabic nk-dua reveal" lang="ar" dir="rtl">{{ dua.arabic }}</p>
       <p class="nk-ayah-en reveal">“{{ dua.english }}”</p>
       <p class="nk-eyebrow reveal">{{ dua.reference }}</p>
-      {{ star("nk-star-sm reveal") }}
-      <p class="nk-families reveal">With love &amp; duas from the families of<br>{{ groom.parents }} and {{ bride.parents }}</p>
+      {{ calligraphy("nk-calli-sm reveal", "nk-gold-foot") }}
+      <p class="nk-families reveal">With love &amp; duas from the families of<br><span class="whitespace-nowrap">{{ groom.parents }}</span> and <span class="whitespace-nowrap">{{ bride.parents }}</span></p>
     </footer>
   </article>
 </main>

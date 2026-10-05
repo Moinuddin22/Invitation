@@ -20,6 +20,7 @@ class Person:
     nickname: str
     father: str
     relation: str  # "Son" / "Daughter"
+    name_calligraphy: str  # nickname in Urdu script, rendered in Nastaliq on the Nikah cover
 
     @property
     def parents(self) -> str:
@@ -78,8 +79,8 @@ class Event:
         return f"https://www.google.com/maps/search/?api=1&query={self._map_query}"
 
 
-GROOM = Person("Moinuddin", "Haris", father="Raziuddin", relation="Son")
-BRIDE = Person("Meher", "Mehreen", father="Saiful Islam", relation="Daughter")
+GROOM = Person("Moinuddin", "Haris", father="Raziuddin", relation="Son", name_calligraphy="حارث")
+BRIDE = Person("Meher", "Mehreen", father="Saiful Islam", relation="Daughter", name_calligraphy="مہرین")
 
 # The Prophetic dua for newlyweds - shown on every invitation.
 WEDDING_DUA = Quote(

@@ -36,21 +36,39 @@
   gap: clamp(1.5rem, 4vh, 2.5rem); padding: clamp(3rem, 10vh, 6rem) 1.5rem;
 }
 .nk-cover > * { animation: fade-up 1.1s ease both; }
-.nk-cover > :nth-child(2) { animation-delay: .3s; }
-.nk-cover > :nth-child(3) { animation-delay: 1.2s; }
-.nk-cover > :nth-child(4) { animation-delay: 1.6s; }
+.nk-cover > :nth-child(2) { animation-delay: .2s; }
+.nk-cover > :nth-child(3) { animation-delay: 3.4s; }   /* after the calligraphy is inked */
+.nk-cover > :nth-child(4) { animation-delay: 3.8s; }
 .nk-cover-bism { font-size: clamp(1.3rem, 4vw, 1.7rem); color: var(--c-gold-ink); margin: 0; }
 
-/* Rub el Hizb: two overlapping squares draw themselves in gold, then a slow rotation */
-.nk-star { fill: none; stroke: var(--c-gold); overflow: visible; }
-.nk-star .s1 { stroke-width: 1.5; stroke-dasharray: 340; stroke-dashoffset: 340; animation: nk-draw 2s ease .3s forwards; }
-.nk-star .s1 + .s1 { animation-delay: .7s; }
-.nk-star .s2 { stroke-width: .9; opacity: 0; animation: fade-up 1s ease 1.6s forwards; }
-.nk-star .dot { fill: var(--c-gold); stroke: none; }
-.nk-star-lg { width: clamp(130px, 24vh, 200px); height: auto; animation: nk-turn 90s linear 2.5s infinite; }
-.nk-star-sm { display: block; width: 84px; height: 84px; margin: 2.25rem auto .5rem; }
-@keyframes nk-turn { to { transform: rotate(360deg); } }
-@keyframes nk-draw { to { stroke-dashoffset: 0; } }
+/* ---------- Calligraphy names ----------
+   1) gold outline traces the letters  2) gold ink floods in  3) flourish draws out
+   4) SMIL gradient sheen sweeps across every few seconds.
+   Animation waits for .fonts-ready so we never trace the fallback font. */
+.nk-calli { display: block; height: auto; overflow: visible; }
+.nk-calli text { font-family: "Noto Nastaliq Urdu", "Amiri", serif; font-weight: 700; font-size: 104px; }
+.nk-calli .wa { font-size: 60px; fill: var(--c-gold); }
+.nk-calli .fl { fill: none; stroke: var(--c-gold); stroke-width: 1; }
+.nk-calli .fl-dot { fill: none; stroke: var(--c-gold); stroke-width: 1; }
+.nk-calli-lg { width: min(86vw, 560px); }
+.nk-calli-sm { width: min(70vw, 260px); margin: 2rem auto .25rem; }
+
+.nk-calli-anim text { stroke: var(--c-gold); stroke-width: 1.4; stroke-dasharray: 1400; stroke-dashoffset: 1400; fill-opacity: 0; }
+.nk-calli-anim .fl { stroke-dasharray: 150; stroke-dashoffset: 150; }
+.nk-calli-anim .fl-dot { opacity: 0; }
+.fonts-ready .nk-calli-anim text { animation: nk-trace 2.6s ease-in-out .3s forwards, nk-ink 1.2s ease 2.4s forwards; }
+.fonts-ready .nk-calli-anim .fl { animation: nk-trace 1.2s ease 2.9s forwards; }
+.fonts-ready .nk-calli-anim .fl-dot { animation: fade-up .8s ease 3.3s forwards; }
+@keyframes nk-trace { to { stroke-dashoffset: 0; } }
+@keyframes nk-ink { to { fill-opacity: 1; stroke-width: 0; } }
+
+/* Reduced motion: skip straight to the finished calligraphy (animations are disabled globally,
+   so the start state above must not be left invisible). */
+@media (prefers-reduced-motion: reduce) {
+  .nk-calli-anim text { stroke-dashoffset: 0; fill-opacity: 1; stroke-width: 0; }
+  .nk-calli-anim .fl { stroke-dashoffset: 0; }
+  .nk-calli-anim .fl-dot { opacity: 1; }
+}
 
 .nk-cover-text { text-align: center; }
 .nk-cover-names { font-family: var(--f-display); font-weight: 400; font-size: clamp(2rem, 7vw, 3.2rem); letter-spacing: .08em; margin: .5rem 0 1rem; line-height: 1.15; }

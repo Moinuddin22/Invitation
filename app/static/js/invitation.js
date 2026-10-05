@@ -111,6 +111,12 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     $("#main")?.setAttribute("tabindex", "-1");
+    // Font-dependent animations (e.g. tracing calligraphy) wait for this class.
+    const fontsReady = () => document.documentElement.classList.add("fonts-ready");
+    document.fonts ? document.fonts.ready.then(fontsReady) : fontsReady();
+    setTimeout(fontsReady, 2500); // never hold the intro hostage to a slow font CDN
+    // SMIL animations ignore prefers-reduced-motion, so drop them ourselves.
+    if (reducedMotion) document.querySelectorAll("animate, animateTransform").forEach((a) => a.remove());
     initIntro();
     initStars();
     initReveal();
