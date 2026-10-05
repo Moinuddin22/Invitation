@@ -22,8 +22,12 @@ class Person:
     relation: str  # "Son" / "Daughter"
 
     @property
+    def parents(self) -> str:
+        return f"Mr. & Mrs. {self.father}"
+
+    @property
     def parent_line(self) -> str:
-        return f"{self.relation} of Janab {self.father}"
+        return f"{self.relation} of {self.parents}"
 
 
 @dataclass(frozen=True)

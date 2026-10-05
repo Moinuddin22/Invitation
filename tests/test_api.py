@@ -35,7 +35,7 @@ def test_root_redirects_to_nikah(client):
 @pytest.mark.parametrize(
     "slug, needles",
     [
-        ("nikah", ["theme-nikah", "nk-card", "St. Mary College Hall", "Ar-Rum", "Raziuddin", "Saiful Islam", "7:00 PM"]),
+        ("nikah", ["theme-nikah", "nk-card", "St. Mary College Hall", "Ar-Rum", "Mr. &amp; Mrs. Raziuddin", "Mr. &amp; Mrs. Saiful Islam", "7:00 PM"]),
         ("valima", ["theme-valima", "vl-hero", "Meridian Function Hall", "Al-Furqan", "Malakpet", "Hyderabad", "8:00 PM"]),
     ],
 )
@@ -90,3 +90,11 @@ def test_date_derived_from_iso():
     from app.events import NIKAH, VALIMA
     assert NIKAH.date_display == "Saturday, 21st November 2026"
     assert VALIMA.time_display == "8:00 PM onwards"
+
+
+@pytest.mark.parametrize("slug", ["nikah", "valima"])
+def test_parents_titled_mr_mrs(client, slug):
+    html = client.get(f"/{slug}").text
+    assert "Janab" not in html
+    assert "Son of Mr. &amp; Mrs. Raziuddin" in html
+    assert "Daughter of Mr. &amp; Mrs. Saiful Islam" in html

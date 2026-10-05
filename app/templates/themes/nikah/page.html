@@ -8,19 +8,23 @@
 <div class="nk-rule reveal" aria-hidden="true"><span></span><i></i><span></span></div>
 {%- endmacro %}
 
+{%- macro star(cls) -%}
+<svg class="nk-star {{ cls }}" viewBox="0 0 200 200" aria-hidden="true">
+  <path class="s1" d="M58 58h84v84H58Z"/>
+  <path class="s1" d="M100 41l59 59-59 59-59-59Z"/>
+  <circle class="s2" cx="100" cy="100" r="30"/>
+  <path class="s2" d="M100 0v34M100 166v34M0 100h34M166 100h34"/>
+  <circle class="dot" cx="100" cy="100" r="3.5"/>
+</svg>
+{%- endmacro %}
+
 {% block body %}
-{# ---------- Cover: full-screen, airy, one idea per row ---------- #}
+{# ---------- Cover: Rub el Hizb star line-drawing, names below ---------- #}
 <div id="intro" class="intro nk-intro" role="dialog" aria-modal="true" aria-labelledby="intro-title">
   <div class="nk-cover">
     <p class="arabic nk-cover-bism" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
 
-    <div class="nk-medallion" aria-hidden="true">
-      <svg viewBox="0 0 200 200">
-        <circle cx="100" cy="100" r="96" />
-        <circle cx="100" cy="100" r="88" />
-      </svg>
-      <p class="nk-monogram">{{ groom.nickname[0] }}<span>&amp;</span>{{ bride.nickname[0] }}</p>
-    </div>
+    {{ star("nk-star-lg") }}
 
     <div class="nk-cover-text">
       <p class="nk-eyebrow">The Nikah of</p>
@@ -112,8 +116,8 @@
       <p class="arabic nk-dua reveal" lang="ar" dir="rtl">{{ dua.arabic }}</p>
       <p class="nk-ayah-en reveal">“{{ dua.english }}”</p>
       <p class="nk-eyebrow reveal">{{ dua.reference }}</p>
-      <p class="nk-monogram nk-monogram-sm reveal" aria-hidden="true">{{ groom.nickname[0] }}<span>&amp;</span>{{ bride.nickname[0] }}</p>
-      <p class="nk-families reveal">With love &amp; duas from the families of<br>Janab {{ groom.father }} &amp; Janab {{ bride.father }}</p>
+      {{ star("nk-star-sm reveal") }}
+      <p class="nk-families reveal">With love &amp; duas from the families of<br>{{ groom.parents }} and {{ bride.parents }}</p>
     </footer>
   </article>
 </main>
