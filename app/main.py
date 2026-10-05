@@ -12,7 +12,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from app.db import Base, engine, get_db
-from app.events import BRIDE, DEFAULT_EVENT, EVENTS, GROOM, Event
+from app.events import BRIDE, DEFAULT_EVENT, EVENTS, GROOM, WEDDING_DUA, Event
 from app.models import Rsvp
 from app.schemas import RsvpIn
 
@@ -29,7 +29,7 @@ async def lifespan(_: FastAPI):
 app = FastAPI(title="Haris & Mehreen - Wedding Invitations", lifespan=lifespan)
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 templates = Jinja2Templates(directory=BASE_DIR / "templates")
-templates.env.globals.update(groom=GROOM, bride=BRIDE)
+templates.env.globals.update(groom=GROOM, bride=BRIDE, dua=WEDDING_DUA)
 
 
 def get_event(slug: str) -> Event:
@@ -56,7 +56,8 @@ def root():
 
 @app.get("/{slug}", response_class=HTMLResponse)
 def invitation(request: Request, event: EventDep):
-    return templates.TemplateResponse(request, "index.html", {"e": event})
+    # Each theme owns its full page layout; only components are shared.
+    return templates.TemplateResponse(request, f"themes/{event.theme}/page.html", {"e": event})
 
 
 @app.post("/{slug}/rsvp", response_class=HTMLResponse)

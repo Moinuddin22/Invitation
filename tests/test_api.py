@@ -35,8 +35,8 @@ def test_root_redirects_to_nikah(client):
 @pytest.mark.parametrize(
     "slug, needles",
     [
-        ("nikah", ["theme-nikah", "St. Mary College Hall", "Ar-Rum", "Raziuddin", "Saiful Islam"]),
-        ("valima", ["theme-valima", "Meridian Function Hall", "27th November", "Al-Furqan", "Malakpet"]),
+        ("nikah", ["theme-nikah", "nk-card", "St. Mary College Hall", "Ar-Rum", "Raziuddin", "Saiful Islam", "7:00 PM"]),
+        ("valima", ["theme-valima", "vl-hero", "Meridian Function Hall", "Al-Furqan", "Malakpet", "Hyderabad", "8:00 PM"]),
     ],
 )
 def test_event_pages(client, slug, needles):
@@ -79,3 +79,14 @@ def test_rsvp_validation(client, data):
     r = client.post("/nikah/rsvp", data=data)
     assert r.status_code == 422 and "Please check the form" in r.text
     assert _rows() == []
+
+
+def test_nikah_has_no_lanterns_or_petals(client):
+    html = client.get("/nikah").text
+    assert "lantern" not in html and "petal" not in html
+
+
+def test_date_derived_from_iso():
+    from app.events import NIKAH, VALIMA
+    assert NIKAH.date_display == "Saturday, 21st November 2026"
+    assert VALIMA.time_display == "8:00 PM onwards"

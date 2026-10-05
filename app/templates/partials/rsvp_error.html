@@ -1,6 +1,6 @@
-<div class="error-card" role="alert">
-  <p class="font-display text-sm tracking-wider uppercase mb-1">Please check the form</p>
-  <ul class="list-disc list-inside font-serif">
+<div class="form-error" role="alert">
+  <p class="form-error-title">Please check the form</p>
+  <ul>
     {% for e in errors %}<li>{{ e }}</li>{% endfor %}
   </ul>
 </div>

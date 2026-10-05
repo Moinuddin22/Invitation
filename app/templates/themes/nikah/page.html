@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block head %}
+<meta name="theme-color" content="#f7f3ec">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Italiana&family=Pinyon+Script&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% macro rule() -%}
+<div class="nk-rule reveal" aria-hidden="true"><span></span><i></i><span></span></div>
+{%- endmacro %}
+
+{% block body %}
+{# ---------- Intro: quiet ivory veil with a self-drawing arch ---------- #}
+<div id="intro" class="intro nk-intro" role="dialog" aria-modal="true" aria-labelledby="intro-title">
+  <div class="nk-intro-inner">
+    <svg class="nk-arch-draw" viewBox="0 0 200 260" aria-hidden="true">
+      <path d="M10 255V110C10 50 60 10 100 5c40 5 90 45 90 105v145" />
+      <path d="M24 255V114C24 62 66 26 100 20c34 6 76 42 76 94v141" />
+    </svg>
+    <div class="nk-intro-text">
+      <p class="arabic nk-bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+      <p class="nk-monogram" aria-hidden="true">{{ groom.nickname[0] }}<span>&amp;</span>{{ bride.nickname[0] }}</p>
+      <h1 id="intro-title" class="nk-intro-names">{{ groom.nickname }} &amp; {{ bride.nickname }}</h1>
+      <button id="open-invite" type="button" class="btn-primary nk-open">Open Invitation</button>
+    </div>
+  </div>
+</div>
+
+<main id="main" class="nk-page">
+  <article class="nk-card">
+    <span class="nk-corner nk-tl" aria-hidden="true"></span><span class="nk-corner nk-tr" aria-hidden="true"></span>
+    <span class="nk-corner nk-bl" aria-hidden="true"></span><span class="nk-corner nk-br" aria-hidden="true"></span>
+
+    {# ---------- Opening ---------- #}
+    <header class="nk-section nk-head">
+      <p class="arabic nk-bismillah reveal" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+      <p class="nk-translit reveal">In the name of Allah, the Most Gracious, the Most Merciful</p>
+      {{ rule() }}
+      <p class="nk-eyebrow reveal">Assalamu Alaikum wa Rahmatullahi wa Barakatuh</p>
+      <p class="nk-lead reveal">{{ e.welcome_text }}</p>
+    </header>
+
+    {# ---------- Couple ---------- #}
+    <section class="nk-section nk-couple" aria-labelledby="couple-title">
+      <h2 id="couple-title" class="sr-only">The couple</h2>
+      <div class="nk-person reveal">
+        <p class="nk-name">{{ groom.name }}</p>
+        <p class="nk-nick">{{ groom.nickname }}</p>
+        <p class="nk-parent">{{ groom.parent_line }}</p>
+      </div>
+      <p class="nk-with reveal" aria-hidden="true">with</p>
+      <div class="nk-person reveal">
+        <p class="nk-name">{{ bride.name }}</p>
+        <p class="nk-nick">{{ bride.nickname }}</p>
+        <p class="nk-parent">{{ bride.parent_line }}</p>
+      </div>
+    </section>
+
+    {# ---------- Date block, stationery style ---------- #}
+    <section class="nk-section" aria-labelledby="when-title">
+      {{ rule() }}
+      <h2 id="when-title" class="nk-title reveal">{{ e.title }}</h2>
+      <div class="nk-date reveal">
+        <span class="nk-date-side">{{ e.when.strftime('%A') }}</span>
+        <span class="nk-date-day">{{ e.when.day }}</span>
+        <span class="nk-date-side">{{ e.when.strftime('%B %Y') }}</span>
+      </div>
+      <p class="nk-time reveal">{{ e.time_display }}</p>
+      <div class="reveal">{% include "components/countdown.html" %}</div>
+    </section>
+
+    {# ---------- Ayah ---------- #}
+    <section class="nk-section nk-ayah reveal" aria-label="Quranic verse">
+      <figure>
+        <blockquote>
+          <p class="arabic nk-ayah-ar" lang="ar" dir="rtl">{{ e.quote.arabic }}</p>
+          <p class="nk-ayah-en">“{{ e.quote.english }}”</p>
+        </blockquote>
+        <figcaption class="nk-eyebrow">{{ e.quote.reference }}</figcaption>
+      </figure>
+    </section>
+
+    {# ---------- Venue ---------- #}
+    <section class="nk-section" aria-labelledby="venue-title">
+      {{ rule() }}
+      <h2 id="venue-title" class="nk-title reveal">The Venue</h2>
+      <address class="nk-venue reveal">
+        <span class="nk-venue-name">{{ e.venue_name }}</span>
+        <span>{{ e.venue_address }}</span>
+      </address>
+      <div class="nk-map reveal">{% include "components/map.html" %}</div>
+      <div class="reveal nk-center">{% include "components/directions_button.html" %}</div>
+    </section>
+
+    {# ---------- RSVP ---------- #}
+    <section class="nk-section" aria-labelledby="rsvp-title">
+      {{ rule() }}
+      <h2 id="rsvp-title" class="nk-title reveal">Kindly Respond</h2>
+      <p class="nk-lead nk-lead-sm reveal">Your presence and duas would mean the world to us.</p>
+      <div class="reveal">{% include "components/rsvp_form.html" %}</div>
+    </section>
+
+    {# ---------- Closing ---------- #}
+    <footer class="nk-section nk-foot">
+      {{ rule() }}
+      <p class="arabic nk-dua reveal" lang="ar" dir="rtl">{{ dua.arabic }}</p>
+      <p class="nk-ayah-en reveal">“{{ dua.english }}”</p>
+      <p class="nk-eyebrow reveal">{{ dua.reference }}</p>
+      <p class="nk-monogram nk-monogram-sm reveal" aria-hidden="true">{{ groom.nickname[0] }}<span>&amp;</span>{{ bride.nickname[0] }}</p>
+      <p class="nk-families reveal">With love &amp; duas from the families of<br>Janab {{ groom.father }} &amp; Janab {{ bride.father }}</p>
+    </footer>
+  </article>
+</main>
+{% endblock %}

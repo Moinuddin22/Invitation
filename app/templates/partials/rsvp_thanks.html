@@ -1,12 +1,11 @@
-<div class="thanks-card">
-  <svg class="w-12 h-12 mx-auto mb-2 crescent-float" aria-hidden="true"><use href="#crescent"/></svg>
+<div class="thanks">
   {% if rsvp.attending %}
-    <p class="font-script text-4xl gold-text">JazakAllah Khair, {{ rsvp.full_name }}!</p>
-    <p class="font-serif text-lg text-ink mt-2">
-      We can't wait to celebrate with you{% if rsvp.guest_count > 1 %} and your party of {{ rsvp.guest_count }}{% endif %}. See you there, InshaAllah!
+    <p class="thanks-title">JazakAllah Khair, {{ rsvp.full_name }}</p>
+    <p class="thanks-text">
+      We can't wait to celebrate with you{% if rsvp.guest_count > 1 %} and your party of {{ rsvp.guest_count }}{% endif %}. See you there, InshaAllah.
     </p>
   {% else %}
-    <p class="font-script text-4xl gold-text">JazakAllah Khair, {{ rsvp.full_name }}</p>
-    <p class="font-serif text-lg text-ink mt-2">We'll miss you. Please keep us in your duas.</p>
+    <p class="thanks-title">JazakAllah Khair, {{ rsvp.full_name }}</p>
+    <p class="thanks-text">We'll miss you. Please keep us in your duas.</p>
   {% endif %}
 </div>

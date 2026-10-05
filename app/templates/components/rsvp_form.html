@@ -1,0 +1,47 @@
+{# Shared RSVP form. Behaviour lives here; look & feel comes from the theme CSS. #}
+<div id="rsvp-area" class="rsvp">
+  <form hx-post="/{{ e.slug }}/rsvp" hx-target="#rsvp-feedback" hx-swap="innerHTML"
+        hx-disabled-elt="find button[type=submit]" class="rsvp-form" novalidate>
+    <div class="field field-full">
+      <label for="full_name" class="field-label">Full name <span aria-hidden="true">*</span></label>
+      <input id="full_name" name="full_name" type="text" required minlength="2" maxlength="120"
+             autocomplete="name" class="field-input" aria-required="true">
+    </div>
+    <div class="field">
+      <label for="email" class="field-label">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" class="field-input">
+    </div>
+    <div class="field">
+      <label for="phone" class="field-label">Phone</label>
+      <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="30" class="field-input">
+    </div>
+
+    <fieldset class="field field-full">
+      <legend class="field-label">Will you be joining us? <span aria-hidden="true">*</span></legend>
+      <div class="choices">
+        <label class="choice"><input type="radio" name="attending" value="yes" required><span>InshaAllah, I'll be there</span></label>
+        <label class="choice"><input type="radio" name="attending" value="no"><span>Sorry, I can't make it</span></label>
+      </div>
+    </fieldset>
+
+    <div id="guest-wrap" class="field">
+      <label for="guest_count" class="field-label">Guests (including you)</label>
+      <select id="guest_count" name="guest_count" class="field-input">
+        {% for n in range(1, 11) %}<option value="{{ n }}">{{ n }}</option>{% endfor %}
+      </select>
+    </div>
+
+    <div class="field field-full">
+      <label for="message" class="field-label">Duas &amp; wishes for the couple</label>
+      <textarea id="message" name="message" rows="3" maxlength="1000" class="field-input"></textarea>
+    </div>
+
+    <div class="field-full rsvp-actions">
+      <button type="submit" class="btn-primary">
+        <span class="btn-label">Send RSVP</span>
+        <span class="htmx-indicator" aria-hidden="true">Sending…</span>
+      </button>
+    </div>
+  </form>
+  <div id="rsvp-feedback" role="status" aria-live="polite"></div>
+</div>

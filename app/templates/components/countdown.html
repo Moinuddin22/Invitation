@@ -1,0 +1,7 @@
+{# Shared countdown. Themes style .countdown / .cd-unit / .cd-num / .cd-label #}
+<div id="countdown" class="countdown {{ extra_class|default('') }}" data-target="{{ e.date_iso }}"
+     role="timer" aria-live="off" aria-label="Countdown to the {{ e.title }}">
+  {% for unit in ["days", "hours", "minutes", "seconds"] %}
+  <div class="cd-unit"><span class="cd-num" data-unit="{{ unit }}">--</span><span class="cd-label">{{ unit }}</span></div>
+  {% endfor %}
+</div>

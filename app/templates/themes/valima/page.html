@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block head %}
+<meta name="theme-color" content="#062a20">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&family=Jost:wght@300;400;500&family=Parisienne&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+{# ---------- Intro: gold curtain lifts like a stage reveal ---------- #}
+<div id="intro" class="intro vl-intro" role="dialog" aria-modal="true" aria-labelledby="intro-title">
+  <div class="vl-intro-inner">
+    <p class="vl-kicker">An evening of celebration</p>
+    <h1 id="intro-title" class="vl-intro-title">Valima</h1>
+    <p class="vl-intro-names">{{ groom.nickname }} <span>&amp;</span> {{ bride.nickname }}</p>
+    <button id="open-invite" type="button" class="btn-primary">Enter</button>
+  </div>
+</div>
+
+<main id="main">
+  {# ---------- 1. HERO: full-bleed night sky + Charminar ---------- #}
+  <section class="vl-hero" aria-labelledby="hero-title">
+    <div class="vl-stars" data-stars="60" aria-hidden="true"></div>
+    <div class="vl-moon" aria-hidden="true"></div>
+    <div class="vl-hero-content">
+      <p class="arabic vl-bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+      <p class="vl-kicker">The families request the pleasure of your company at the</p>
+      <h2 id="hero-title" class="vl-hero-title">Valima <em>Reception</em></h2>
+      <p class="vl-hero-names">{{ groom.nickname }} <span>&amp;</span> {{ bride.nickname }}</p>
+      <p class="vl-hero-meta">{{ e.when.strftime('%d.%m.%Y') }} <span aria-hidden="true">·</span> {{ e.city }}</p>
+    </div>
+    <svg class="vl-skyline" viewBox="0 0 1200 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <g fill="currentColor">
+        <path d="M0 260V200h40v-30h30v30h50v-50h20v-20h20v20h20v50h60v-24h40v24h50V260Z" opacity=".5"/>
+        <path d="M820 260v-60h50v-40h20v40h70v-30h40v30h40v-50h20v-15h20v15h20v50h40v-20h60v80Z" opacity=".5"/>
+        <g id="vl-minar">
+          <rect x="452" y="60" width="26" height="200"/><rect x="447" y="95" width="36" height="6"/>
+          <rect x="447" y="140" width="36" height="6"/><rect x="447" y="185" width="36" height="6"/>
+          <path d="M452 60c0-16 6-26 13-32 7 6 13 16 13 32Z"/><rect x="464" y="12" width="2" height="16"/>
+        </g>
+        <use href="#vl-minar" transform="translate(270 0)"/>
+        <path d="M478 140h244v120H478Z"/><path d="M478 134h244v-10H478Z"/><path d="M520 124q80-36 160 0Z"/>
+      </g>
+      <g fill="#062a20">
+        <path d="M560 260v-66a40 40 0 0 1 80 0v66Z"/>
+        <path d="M494 260v-40a15 15 0 0 1 30 0v40ZM676 260v-40a15 15 0 0 1 30 0v40Z"/>
+        <circle cx="600" cy="162" r="11"/>
+      </g>
+    </svg>
+    <a href="#invite" class="vl-scroll" aria-label="Scroll to invitation details"><span></span></a>
+  </section>
+
+  {# ---------- 2. SPLIT: invitation text | couple ---------- #}
+  <section id="invite" class="vl-split" aria-labelledby="couple-title">
+    <div class="vl-split-text reveal">
+      <p class="vl-num">01</p>
+      <p class="vl-kicker vl-kicker-dark">Assalamu Alaikum wa Rahmatullah</p>
+      <p class="vl-body">{{ e.welcome_text }}</p>
+    </div>
+    <div class="vl-split-couple reveal">
+      <h2 id="couple-title" class="sr-only">The couple</h2>
+      <div class="vl-person">
+        <p class="vl-name">{{ groom.name }}</p>
+        <p class="vl-nick">{{ groom.nickname }}</p>
+        <p class="vl-parent">{{ groom.parent_line }}</p>
+      </div>
+      <div class="vl-amp" aria-hidden="true">&amp;</div>
+      <div class="vl-person">
+        <p class="vl-name">{{ bride.name }}</p>
+        <p class="vl-nick">{{ bride.nickname }}</p>
+        <p class="vl-parent">{{ bride.parent_line }}</p>
+      </div>
+    </div>
+  </section>
+
+  {# ---------- 3. BAND: big date + countdown ---------- #}
+  <section class="vl-band" aria-labelledby="date-title">
+    <h2 id="date-title" class="sr-only">Date and time</h2>
+    <div class="vl-band-date reveal">
+      <span class="vl-band-day">{{ e.when.day }}</span>
+      <span class="vl-band-month">{{ e.when.strftime('%B') }}<br>{{ e.when.year }}</span>
+      <span class="vl-band-sep" aria-hidden="true"></span>
+      <span class="vl-band-time">{{ e.when.strftime('%A') }}<br>{{ e.time_display }}</span>
+    </div>
+    <div class="reveal">{% include "components/countdown.html" %}</div>
+  </section>
+
+  {# ---------- 4. AYAH: arch window ---------- #}
+  <section class="vl-ayah" aria-label="Quranic verse">
+    <figure class="vl-arch reveal">
+      <blockquote>
+        <p class="arabic vl-ayah-ar" lang="ar" dir="rtl">{{ e.quote.arabic }}</p>
+        <p class="vl-ayah-en">“{{ e.quote.english }}”</p>
+      </blockquote>
+      <figcaption class="vl-kicker">{{ e.quote.reference }}</figcaption>
+    </figure>
+  </section>
+
+  {# ---------- 5. VENUE: full-width map with floating card ---------- #}
+  <section class="vl-venue" aria-labelledby="venue-title">
+    <div class="vl-venue-map">{% include "components/map.html" %}</div>
+    <div class="vl-venue-card reveal">
+      <p class="vl-num">02</p>
+      <h2 id="venue-title" class="vl-h2">The Venue</h2>
+      <address>
+        <span class="vl-venue-name">{{ e.venue_name }}</span>
+        <span>{{ e.venue_address }}</span>
+      </address>
+      {% include "components/directions_button.html" %}
+    </div>
+  </section>
+
+  {# ---------- 6. RSVP: two-column ---------- #}
+  <section class="vl-rsvp" aria-labelledby="rsvp-title">
+    <div class="vl-rsvp-intro reveal">
+      <p class="vl-num">03</p>
+      <h2 id="rsvp-title" class="vl-h2">Will you <em>join us?</em></h2>
+      <p class="vl-body">Your presence would complete our celebration. Kindly let us know so we can host you well.</p>
+    </div>
+    <div class="vl-rsvp-form reveal">{% include "components/rsvp_form.html" %}</div>
+  </section>
+
+  {# ---------- 7. FOOTER ---------- #}
+  <footer class="vl-foot">
+    <p class="arabic vl-dua" lang="ar" dir="rtl">{{ dua.arabic }}</p>
+    <p class="vl-ayah-en">“{{ dua.english }}”</p>
+    <p class="vl-kicker">{{ dua.reference }}</p>
+    <p class="vl-foot-names">{{ groom.nickname }} &amp; {{ bride.nickname }}</p>
+    <p class="vl-parent">With love &amp; duas from the families of Janab {{ groom.father }} &amp; Janab {{ bride.father }}</p>
+  </footer>
+</main>
+{% endblock %}
