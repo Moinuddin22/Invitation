@@ -1,22 +1,29 @@
 /* ==========================================================
-   VALIMA: "Nizami Nights". Full-bleed editorial layout.
-   Deep emerald night, antique gold, ivory sections. Bodoni + Jost.
+   VALIMA: "Lavender Dusk". Full-bleed editorial layout.
+   Soft lavender, deep plum ink, champagne-gold accents. Bodoni + Jost.
+   Contrast (AA): plum #3b2a57 on lavender #f6f2fb = 11:1,
+   muted #5e5175 = 6.6:1, purple accent #6a4b98 = 6.3:1.
    ========================================================== */
 .theme-valima {
-  --c-bg: #062a20;
-  --c-deep: #041d16;
-  --c-emerald: #0b3d2e;
-  --c-ivory: #f5efe2;
-  --c-ink: #f5efe2;
-  --c-muted: #c9c1ae;          /* on emerald: 8.9:1 */
-  --c-gold: #c9a45c;
-  --c-gold-dark: #8a6a2f;      /* gold text on ivory: 4.6:1 */
-  --c-accent: #c9a45c;
-  --c-accent-ink: #041d16;
-  --c-line: rgba(201,164,92,.4);
-  --c-field-bg: rgba(255,255,255,.04);
-  --c-field-ink: #f5efe2;
-  --c-focus: #e2c27d;
+  --c-bg: #f6f2fb;            /* page */
+  --c-lav-100: #efe8f7;
+  --c-lav-200: #e2d6f1;
+  --c-lav-300: #c9b5e4;       /* decorative */
+  --c-lav-400: #a88bd1;       /* decorative */
+  --c-plum: #3b2a57;          /* primary ink + dark band */
+  --c-plum-deep: #2b1e42;
+  --c-ink: #3b2a57;
+  --c-muted: #5e5175;
+  --c-purple: #6a4b98;        /* accent text */
+  --c-gold: #b8955a;          /* decorative only */
+  --c-on-dark: #f6f2fb;
+  --c-on-dark-muted: #d9cfe8;
+  --c-accent: #3b2a57;
+  --c-accent-ink: #f6f2fb;
+  --c-line: rgba(106,75,152,.25);
+  --c-field-bg: #ffffff;
+  --c-field-ink: #3b2a57;
+  --c-focus: #6a4b98;
   --f-body: "Jost", system-ui, sans-serif;
   --f-label: "Jost", system-ui, sans-serif;
   --f-display: "Bodoni Moda", Didot, serif;
@@ -26,123 +33,124 @@
 }
 
 /* ---------- Shared bits ---------- */
-.vl-kicker { font-family: var(--f-label); font-weight: 400; text-transform: uppercase; letter-spacing: .32em; font-size: .72rem; color: var(--c-gold); margin: .5rem 0; }
-.vl-kicker-dark { color: var(--c-gold-dark); }
-.vl-num { font-family: var(--f-display); font-style: italic; font-size: 1rem; color: var(--c-gold); margin: 0 0 1rem; }
-.vl-num::after { content: ""; display: inline-block; width: 3rem; height: 1px; background: currentColor; margin-left: .75rem; vertical-align: middle; }
-.vl-h2 { font-family: var(--f-display); font-weight: 400; font-size: clamp(2rem, 6vw, 3.25rem); line-height: 1.05; margin: 0 0 1rem; }
-.vl-h2 em, .vl-hero-title em { font-family: var(--f-script); font-style: normal; color: var(--c-gold); font-weight: 400; }
-.vl-body { font-size: clamp(1.05rem, 2.4vw, 1.2rem); line-height: 1.8; margin: 0; }
+.vl-kicker { font-family: var(--f-label); font-weight: 400; text-transform: uppercase; letter-spacing: .32em; font-size: .72rem; color: var(--c-purple); margin: .5rem 0; }
+.vl-kicker-dark { color: var(--c-purple); }
+.vl-num { font-family: var(--f-display); font-style: italic; font-size: 1rem; color: var(--c-purple); margin: 0 0 1rem; }
+.vl-num::after { content: ""; display: inline-block; width: 3rem; height: 1px; background: var(--c-gold); margin-left: .75rem; vertical-align: middle; }
+.vl-h2 { font-family: var(--f-display); font-weight: 400; font-size: clamp(2rem, 6vw, 3.25rem); line-height: 1.05; margin: 0 0 1rem; color: var(--c-plum); }
+.vl-h2 em, .vl-hero-title em { font-family: var(--f-script); font-style: normal; color: var(--c-purple); font-weight: 400; }
+.vl-body { font-size: clamp(1.05rem, 2.4vw, 1.2rem); line-height: 1.8; margin: 0; color: var(--c-muted); }
 
-/* ---------- Intro: gold curtain slides up ---------- */
+/* ---------- Intro: lavender curtain slides up ---------- */
 .vl-intro {
-  background: linear-gradient(180deg, var(--c-emerald), var(--c-deep));
+  background: linear-gradient(180deg, var(--c-lav-100), var(--c-lav-200));
   transition: transform 1.2s cubic-bezier(.8,0,.2,1);
 }
-.vl-intro::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--c-gold); }
+.vl-intro::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: linear-gradient(90deg, var(--c-lav-400), var(--c-gold), var(--c-lav-400)); }
 .vl-intro.opening { transform: translateY(-100%); }
 .vl-intro-inner { padding: 2rem; animation: fade-up 1s ease both; }
-.vl-intro-title { font-family: var(--f-script); font-weight: 400; font-size: clamp(4.5rem, 20vw, 8rem); line-height: 1; margin: .5rem 0; color: var(--c-gold); }
-.vl-intro-names { font-family: var(--f-display); font-size: clamp(1.1rem, 4vw, 1.4rem); letter-spacing: .25em; text-transform: uppercase; margin: 0 0 2rem; }
-.vl-intro-names span, .vl-hero-names span { font-family: var(--f-script); text-transform: none; letter-spacing: 0; color: var(--c-gold); font-size: 1.3em; }
+.vl-intro-title { font-family: var(--f-script); font-weight: 400; font-size: clamp(4.5rem, 20vw, 8rem); line-height: 1; margin: .5rem 0; color: var(--c-purple); }
+.vl-intro-names { font-family: var(--f-display); font-size: clamp(1.1rem, 4vw, 1.4rem); letter-spacing: .25em; text-transform: uppercase; margin: 0 0 2rem; color: var(--c-plum); }
+.vl-intro-names span, .vl-hero-names span { font-family: var(--f-script); text-transform: none; letter-spacing: 0; color: var(--c-purple); font-size: 1.3em; }
 
-/* ---------- 1. Hero ---------- */
+/* ---------- 1. Hero: lavender dusk sky ---------- */
 .vl-hero {
   position: relative; min-height: 100svh; display: grid; place-items: center; text-align: center; overflow: hidden;
-  background: radial-gradient(ellipse at 50% 30%, #145440 0%, var(--c-emerald) 40%, var(--c-deep) 100%);
+  background:
+    radial-gradient(ellipse at 50% 110%, #fbe9f0 0%, transparent 55%),
+    linear-gradient(180deg, #e7dcf4 0%, #f1eaf8 55%, #f8eef4 100%);
   padding: 4rem 1.25rem 30vh;
 }
 .vl-stars { position: absolute; inset: 0; }
-.star { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: #fff6dc; box-shadow: 0 0 6px #fff6dc; animation: vl-twinkle 3.5s ease-in-out infinite; }
+.star { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #fff; box-shadow: 0 0 8px 1px rgba(184,149,90,.6); animation: vl-twinkle 3.5s ease-in-out infinite; }
 @keyframes vl-twinkle { 50% { opacity: .15; } }
 .vl-moon {
   position: absolute; top: 9%; right: 12%; width: clamp(48px, 9vw, 90px); aspect-ratio: 1; border-radius: 50%;
   box-shadow: inset clamp(-12px, -2.2vw, -22px) clamp(-6px, -1vw, -10px) 0 0 var(--c-gold);
-  filter: drop-shadow(0 0 18px rgba(201,164,92,.45)); transform: rotate(-20deg);
+  filter: drop-shadow(0 0 16px rgba(184,149,90,.35)); transform: rotate(-20deg);
 }
 .vl-hero-content { position: relative; z-index: 2; max-width: 46rem; }
-.vl-bismillah { font-size: clamp(1.5rem, 5vw, 2.1rem); color: var(--c-gold); margin: 0 0 1rem; }
-.vl-hero-title { font-family: var(--f-display); font-weight: 400; font-size: clamp(3rem, 12vw, 7rem); line-height: .95; margin: .75rem 0; letter-spacing: -.01em; }
+.vl-bismillah { font-size: clamp(1.5rem, 5vw, 2.1rem); color: var(--c-purple); margin: 0 0 1rem; }
+.vl-hero-title { font-family: var(--f-display); font-weight: 400; font-size: clamp(3rem, 12vw, 7rem); line-height: .95; margin: .75rem 0; letter-spacing: -.01em; color: var(--c-plum); }
 .vl-hero-title em { display: block; font-size: .6em; margin-top: .1em; }
-.vl-hero-names { font-family: var(--f-display); letter-spacing: .3em; text-transform: uppercase; font-size: clamp(1rem, 3.5vw, 1.35rem); margin: 1.5rem 0 .5rem; }
+.vl-hero-names { font-family: var(--f-display); letter-spacing: .3em; text-transform: uppercase; font-size: clamp(1rem, 3.5vw, 1.35rem); margin: 1.5rem 0 .5rem; color: var(--c-plum); }
 .vl-hero-meta { font-family: var(--f-label); letter-spacing: .4em; font-size: .85rem; color: var(--c-muted); margin: 0; }
-.vl-skyline { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 28vh; color: #021510; z-index: 1; }
-.vl-hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--c-gold); z-index: 2; }
+.vl-skyline { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 28vh; color: var(--c-lav-300); z-index: 1; }
+.vl-skyline-cut { fill: #f6ecf3; }
+.vl-hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--c-gold); z-index: 2; }
 .vl-scroll { position: absolute; bottom: 1.75rem; left: 50%; translate: -50% 0; z-index: 3; width: 44px; height: 44px; display: grid; place-items: center; }
-.vl-scroll span { width: 1px; height: 32px; background: linear-gradient(var(--c-gold), transparent); animation: vl-drip 2s ease-in-out infinite; }
+.vl-scroll span { width: 1px; height: 32px; background: linear-gradient(var(--c-plum), transparent); animation: vl-drip 2s ease-in-out infinite; }
 @keyframes vl-drip { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
 
-/* ---------- 2. Split (ivory) ---------- */
-.vl-split { display: grid; grid-template-columns: 1fr; background: var(--c-ivory); color: #1d2a24; }
+/* ---------- 2. Split ---------- */
+.vl-split { display: grid; grid-template-columns: 1fr; background: #fff; }
 @media (min-width: 900px) { .vl-split { grid-template-columns: 1fr 1.2fr; } }
 .vl-split-text { padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 6vw, 5rem); align-self: center; }
-.vl-split-text .vl-num { color: var(--c-gold-dark); }
 .vl-split-couple {
   display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: .5rem;
   padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem);
-  background: var(--c-emerald); color: var(--c-ink);
+  background: linear-gradient(160deg, var(--c-lav-200), var(--c-lav-100));
 }
 @media (min-width: 900px) { .vl-split-couple { clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%); padding-left: 12%; } }
-.vl-name { font-family: var(--f-display); font-size: clamp(2.6rem, 8vw, 4rem); line-height: 1; margin: 0; }
-.vl-nick { font-family: var(--f-script); font-size: clamp(1.6rem, 5vw, 2.2rem); color: var(--c-gold); margin: .2rem 0 0; }
+.vl-name { font-family: var(--f-display); font-size: clamp(2.6rem, 8vw, 4rem); line-height: 1; margin: 0; color: var(--c-plum); }
+.vl-nick { font-family: var(--f-script); font-size: clamp(1.6rem, 5vw, 2.2rem); color: var(--c-purple); margin: .2rem 0 0; }
 .vl-parent { font-size: .95rem; letter-spacing: .06em; color: var(--c-muted); margin: .4rem 0 0; }
 .vl-amp { font-family: var(--f-script); font-size: clamp(3rem, 10vw, 4.5rem); color: var(--c-gold); line-height: 1; margin: .5rem 0; }
 
-/* ---------- 3. Band ---------- */
-.vl-band { background: var(--c-deep); padding: clamp(3rem, 8vw, 5rem) 1.25rem; text-align: center; border-top: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); }
+/* ---------- 3. Band: the one deep-plum moment ---------- */
+.vl-band { background: linear-gradient(135deg, var(--c-plum), var(--c-plum-deep)); color: var(--c-on-dark); padding: clamp(3rem, 8vw, 5rem) 1.25rem; text-align: center; }
 .vl-band-date { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: clamp(1rem, 4vw, 2.5rem); margin-bottom: 2.5rem; }
-.vl-band-day { font-family: var(--f-display); font-size: clamp(5rem, 18vw, 9rem); line-height: .85; color: var(--c-gold); }
+.vl-band-day { font-family: var(--f-display); font-size: clamp(5rem, 18vw, 9rem); line-height: .85; color: var(--c-lav-300); }
 .vl-band-month, .vl-band-time { font-family: var(--f-label); text-align: left; text-transform: uppercase; letter-spacing: .25em; font-size: clamp(.8rem, 2.4vw, 1rem); line-height: 1.8; }
-.vl-band-sep { width: 1px; height: 4.5rem; background: var(--c-line); }
+.vl-band-sep { width: 1px; height: 4.5rem; background: rgba(201,181,228,.4); }
 @media (max-width: 520px) { .vl-band-sep { display: none; } .vl-band-time { flex-basis: 100%; text-align: center; } }
 .theme-valima .countdown { gap: 0; }
-.theme-valima .cd-unit { min-width: clamp(70px, 20vw, 120px); padding: .5rem 0; border-left: 1px solid var(--c-line); }
+.theme-valima .cd-unit { min-width: clamp(70px, 20vw, 120px); padding: .5rem 0; border-left: 1px solid rgba(201,181,228,.35); }
 .theme-valima .cd-unit:first-child { border-left: 0; }
 .theme-valima .cd-num { font-family: var(--f-display); font-size: clamp(2rem, 7vw, 3.25rem); }
-.theme-valima .cd-label { color: var(--c-gold); }
+.theme-valima .cd-label { color: var(--c-on-dark-muted); }
 
 /* ---------- 4. Ayah arch ---------- */
-.vl-ayah { padding: clamp(3.5rem, 9vw, 6rem) 1.25rem; background: radial-gradient(ellipse at center, #0f4a38, var(--c-bg) 70%); }
+.vl-ayah { padding: clamp(3.5rem, 9vw, 6rem) 1.25rem; background: radial-gradient(ellipse at center, #fff, var(--c-bg) 70%); }
 .vl-arch {
-  margin: 0 auto; max-width: 36rem; text-align: center;
+  margin: 0 auto; max-width: 36rem; text-align: center; background: #fff;
   padding: clamp(4rem, 12vw, 6rem) clamp(1.5rem, 5vw, 3rem) clamp(2rem, 5vw, 3rem);
-  border: 1px solid var(--c-gold); border-radius: 50% 50% 0 0 / clamp(110px, 25vw, 200px) clamp(110px, 25vw, 200px) 0 0;
-  box-shadow: inset 0 0 0 8px var(--c-bg), inset 0 0 0 9px var(--c-line);
+  border: 1px solid var(--c-lav-400); border-radius: 50% 50% 0 0 / clamp(110px, 25vw, 200px) clamp(110px, 25vw, 200px) 0 0;
+  box-shadow: inset 0 0 0 8px #fff, inset 0 0 0 9px var(--c-lav-200), 0 25px 60px rgba(59,42,87,.08);
 }
 .vl-arch blockquote { margin: 0; }
-.vl-ayah-ar { font-size: clamp(1.35rem, 4.5vw, 1.9rem); line-height: 2.1; color: var(--c-gold); margin: 0; }
-.vl-ayah-en { font-family: var(--f-display); font-style: italic; font-size: clamp(1.05rem, 2.8vw, 1.25rem); line-height: 1.7; margin: 1rem 0 .75rem; }
+.vl-ayah-ar { font-size: clamp(1.35rem, 4.5vw, 1.9rem); line-height: 2.1; color: var(--c-purple); margin: 0; }
+.vl-ayah-en { font-family: var(--f-display); font-style: italic; font-size: clamp(1.05rem, 2.8vw, 1.25rem); line-height: 1.7; margin: 1rem 0 .75rem; color: var(--c-plum); }
 
 /* ---------- 5. Venue ---------- */
-.vl-venue { position: relative; display: grid; grid-template-columns: 1fr; background: var(--c-ivory); }
+.vl-venue { position: relative; display: grid; grid-template-columns: 1fr; background: var(--c-lav-100); }
 .vl-venue-map { height: clamp(320px, 60vh, 560px); }
-.vl-venue-map .map-iframe { filter: saturate(.7) contrast(1.05); }
+.vl-venue-map .map-iframe { filter: saturate(.6) hue-rotate(-10deg); }
 .vl-venue-card {
   position: relative; z-index: 2; margin: -4rem 1rem 2.5rem; padding: clamp(1.75rem, 5vw, 3rem);
-  background: var(--c-emerald); border-top: 3px solid var(--c-gold); box-shadow: 0 25px 60px rgba(0,0,0,.35);
+  background: #fff; border-top: 3px solid var(--c-lav-400); box-shadow: 0 25px 60px rgba(59,42,87,.18);
 }
 @media (min-width: 900px) {
   .vl-venue-map { height: 620px; }
   .vl-venue-card { position: absolute; top: 50%; left: 6%; translate: 0 -50%; margin: 0; max-width: 26rem; }
 }
 .vl-venue-card address { display: flex; flex-direction: column; gap: .35rem; font-style: normal; color: var(--c-muted); line-height: 1.6; margin-bottom: 1.75rem; }
-.vl-venue-name { font-family: var(--f-display); font-size: 1.5rem; color: var(--c-ink); }
+.vl-venue-name { font-family: var(--f-display); font-size: 1.5rem; color: var(--c-plum); }
 
 /* ---------- 6. RSVP ---------- */
 .vl-rsvp { display: grid; gap: clamp(2rem, 5vw, 4rem); grid-template-columns: 1fr; padding: clamp(3.5rem, 9vw, 6rem) clamp(1.25rem, 6vw, 5rem); max-width: 76rem; margin: 0 auto; }
 @media (min-width: 900px) { .vl-rsvp { grid-template-columns: 1fr 1.6fr; align-items: start; } .vl-rsvp-intro { position: sticky; top: 3rem; } }
-.vl-rsvp-intro .vl-body { color: var(--c-muted); }
-.theme-valima .field-label { color: var(--c-gold); }
-.theme-valima .field-input { border-color: var(--c-line); }
-.theme-valima select.field-input option { color: #1d2a24; }
-.theme-valima .choice { border-color: var(--c-line); }
+.theme-valima .field-label { color: var(--c-purple); }
+.theme-valima .field-input { border-color: var(--c-lav-300); }
+.theme-valima .choice { border-color: var(--c-lav-300); background: #fff; }
 .theme-valima .rsvp-actions { text-align: left; }
 .theme-valima .btn-primary { font-weight: 500; }
-.theme-valima .btn-primary:hover { background: #e2c27d; box-shadow: 0 10px 30px rgba(201,164,92,.35); }
+.theme-valima .btn-primary:hover { background: var(--c-purple); border-color: var(--c-purple); box-shadow: 0 10px 30px rgba(106,75,152,.3); }
 .theme-valima .thanks { text-align: left; }
-.theme-valima .thanks-title { font-family: var(--f-display); font-size: 2.2rem; color: var(--c-gold); }
+.theme-valima .thanks-title { font-family: var(--f-display); font-size: 2.2rem; color: var(--c-purple); }
 
 /* ---------- 7. Footer ---------- */
-.vl-foot { text-align: center; padding: clamp(3.5rem, 9vw, 5rem) 1.25rem; background: var(--c-deep); border-top: 1px solid var(--c-line); }
-.vl-dua { font-size: clamp(1.3rem, 4vw, 1.75rem); line-height: 2; color: var(--c-gold); margin: 0; }
-.vl-foot-names { font-family: var(--f-script); font-size: clamp(2.6rem, 9vw, 3.5rem); color: var(--c-gold); margin: 2rem 0 .25rem; }
+.vl-foot { text-align: center; padding: clamp(3.5rem, 9vw, 5rem) 1.25rem; background: var(--c-lav-100); border-top: 1px solid var(--c-line); }
+.vl-dua { font-size: clamp(1.3rem, 4vw, 1.75rem); line-height: 2; color: var(--c-purple); margin: 0; }
+.vl-foot .vl-ayah-en { color: var(--c-plum); }
+.vl-foot-names { font-family: var(--f-script); font-size: clamp(2.6rem, 9vw, 3.5rem); color: var(--c-purple); margin: 2rem 0 .25rem; }

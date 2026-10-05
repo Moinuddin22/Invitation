@@ -9,19 +9,26 @@
 {%- endmacro %}
 
 {% block body %}
-{# ---------- Intro: quiet ivory veil with a self-drawing arch ---------- #}
+{# ---------- Cover: full-screen, airy, one idea per row ---------- #}
 <div id="intro" class="intro nk-intro" role="dialog" aria-modal="true" aria-labelledby="intro-title">
-  <div class="nk-intro-inner">
-    <svg class="nk-arch-draw" viewBox="0 0 200 260" aria-hidden="true">
-      <path d="M10 255V110C10 50 60 10 100 5c40 5 90 45 90 105v145" />
-      <path d="M24 255V114C24 62 66 26 100 20c34 6 76 42 76 94v141" />
-    </svg>
-    <div class="nk-intro-text">
-      <p class="arabic nk-bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
-      <p class="nk-monogram" aria-hidden="true">{{ groom.nickname[0] }}<span>&amp;</span>{{ bride.nickname[0] }}</p>
-      <h1 id="intro-title" class="nk-intro-names">{{ groom.nickname }} &amp; {{ bride.nickname }}</h1>
-      <button id="open-invite" type="button" class="btn-primary nk-open">Open Invitation</button>
+  <div class="nk-cover">
+    <p class="arabic nk-cover-bism" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+
+    <div class="nk-medallion" aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="96" />
+        <circle cx="100" cy="100" r="88" />
+      </svg>
+      <p class="nk-monogram">{{ groom.nickname[0] }}<span>&amp;</span>{{ bride.nickname[0] }}</p>
     </div>
+
+    <div class="nk-cover-text">
+      <p class="nk-eyebrow">The Nikah of</p>
+      <h1 id="intro-title" class="nk-cover-names">{{ groom.nickname }} <span>&amp;</span> {{ bride.nickname }}</h1>
+      <p class="nk-cover-date">{{ e.when.strftime('%d · %m · %Y') }}<span aria-hidden="true"></span>{{ e.city }}</p>
+    </div>
+
+    <button id="open-invite" type="button" class="btn-primary nk-open">Open Invitation</button>
   </div>
 </div>
 
