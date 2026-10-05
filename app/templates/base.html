@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{% block title %}Wedding Invitation{% endblock %}</title>
+  <meta name="description" content="You are cordially invited to the Nikah of {{ s.groom_name }} & {{ s.bride_name }}">
+  <meta name="theme-color" content="#3a0812">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+  <!-- Prototype: Tailwind Play CDN. Swap for a compiled build before production. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/htmx.org@2.0.3" defer></script>
+  <link rel="stylesheet" href="{{ url_for('static', path='css/invitation.css') }}">
+</head>
+<body class="invite-body">
+  <a href="#main" class="skip-link">Skip to invitation</a>
+  {% include "partials/ornaments.html" %}
+  {% block content %}{% endblock %}
+  <script src="{{ url_for('static', path='js/invitation.js') }}" defer></script>
+</body>
+</html>

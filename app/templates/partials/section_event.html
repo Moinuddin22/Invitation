@@ -1,0 +1,22 @@
+<section class="section text-center" aria-labelledby="event-title">
+  <svg class="divider reveal" aria-hidden="true"><use href="#divider"/></svg>
+  <h2 id="event-title" class="section-title reveal">Nikah Ceremony</h2>
+
+  <div class="event-grid reveal">
+    <div class="event-tile">
+      <span class="event-label">Date</span>
+      <span class="event-value">{{ s.wedding_date_display }}</span>
+    </div>
+    <div class="event-tile">
+      <span class="event-label">Time</span>
+      <span class="event-value">{{ s.wedding_time_display }}</span>
+    </div>
+  </div>
+
+  <div id="countdown" class="countdown reveal" data-target="{{ s.wedding_date_iso }}" role="timer" aria-live="off" aria-label="Countdown to the wedding">
+    <div><span data-unit="days">--</span><small>Days</small></div>
+    <div><span data-unit="hours">--</span><small>Hours</small></div>
+    <div><span data-unit="minutes">--</span><small>Minutes</small></div>
+    <div><span data-unit="seconds">--</span><small>Seconds</small></div>
+  </div>
+</section>

@@ -1,0 +1,21 @@
+<section class="section text-center" aria-labelledby="venue-title">
+  <svg class="divider reveal" aria-hidden="true"><use href="#divider"/></svg>
+  <h2 id="venue-title" class="section-title reveal">The Venue</h2>
+  <address class="not-italic reveal">
+    <p class="font-cinzel text-xl sm:text-2xl text-gold-light">{{ s.venue_name }}</p>
+    <p class="font-serif text-ivory/90 text-lg mt-1">{{ s.venue_address }}</p>
+  </address>
+
+  <div class="map-frame reveal mt-6">
+    <iframe
+      title="Map showing {{ s.venue_name }}"
+      src="{{ map_embed_url }}"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      allowfullscreen></iframe>
+  </div>
+  <a href="{{ map_link_url }}" target="_blank" rel="noopener" class="btn-gold mt-6 inline-flex items-center gap-2 reveal">
+    <svg viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
+    Get Directions<span class="sr-only"> (opens Google Maps in a new tab)</span>
+  </a>
+</section>

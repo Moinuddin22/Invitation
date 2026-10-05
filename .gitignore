@@ -1,0 +1,16 @@
+.vscode/
+.venv/
+venv/
+node_modules/
+__pycache__/
+*.pyc
+.env
+*.db
+.pytest_cache/
+# Terraform
+infra/terraform/.terraform/
+infra/terraform/*.tfstate*
+infra/terraform/terraform.tfvars
+# Guest data exports (PII)
+*.csv
+rsvp_export*
