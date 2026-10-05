@@ -46,8 +46,8 @@
    4) SMIL gradient sheen sweeps across every few seconds.
    Animation waits for .fonts-ready so we never trace the fallback font. */
 .nk-calli { display: block; height: auto; overflow: visible; }
-.nk-calli text { font-family: "Noto Nastaliq Urdu", "Amiri", serif; font-weight: 700; font-size: 104px; }
-.nk-calli .wa { font-size: 60px; fill: var(--c-gold); }
+.nk-calli text { font-family: "Gulzar", "Amiri", serif; font-weight: 400; font-size: 112px; }
+.nk-calli text.amp { font-family: "Playfair Display", serif; font-style: italic; font-size: 64px; }
 .nk-calli .fl { fill: none; stroke: var(--c-gold); stroke-width: 1; }
 .nk-calli .fl-dot { fill: none; stroke: var(--c-gold); stroke-width: 1; }
 .nk-calli-lg { width: min(86vw, 560px); }
@@ -71,8 +71,8 @@
 }
 
 .nk-cover-text { text-align: center; }
-.nk-cover-names { font-family: var(--f-display); font-weight: 400; font-size: clamp(2rem, 7vw, 3.2rem); letter-spacing: .08em; margin: .5rem 0 1rem; line-height: 1.15; }
-.nk-cover-names span { font-family: var(--f-script); color: var(--c-gold-ink); letter-spacing: 0; padding: 0 .15em; }
+.nk-cover-names { font-family: "Great Vibes", cursive; font-weight: 400; font-size: clamp(2.6rem, 9vw, 4rem); margin: .25rem 0 .75rem; line-height: 1.25; }
+.nk-cover-names span { font-family: "Playfair Display", serif; font-style: italic; font-size: .8em; color: var(--c-gold-ink); padding: 0 .2em; }
 .nk-cover-date { font-family: var(--f-display); letter-spacing: .3em; font-size: clamp(.8rem, 2.4vw, .95rem); color: var(--c-muted); margin: 0; display: flex; align-items: center; justify-content: center; gap: 1rem; }
 .nk-cover-date span { width: 1px; height: 1rem; background: var(--c-gold); }
 .nk-open { font-size: .72rem; padding: .85rem 2rem; }

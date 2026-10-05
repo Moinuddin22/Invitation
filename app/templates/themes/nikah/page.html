@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block head %}
 <meta name="theme-color" content="#f7f3ec">
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Italiana&family=Pinyon+Script&family=Noto+Nastaliq+Urdu:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Italiana&family=Pinyon+Script&family=Gulzar&family=Great+Vibes&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% macro rule() -%}
@@ -20,7 +20,10 @@
                         keyTimes="0;.3;1" dur="7s" begin="4.6s" repeatCount="indefinite"/>
     </linearGradient>
   </defs>
-  <text x="320" y="185" text-anchor="middle" fill="url(#{{ gid }})" lang="ur" direction="rtl">{{ groom.name_calligraphy }} <tspan class="wa">و</tspan> {{ bride.name_calligraphy }}</text>
+  {#- Urdu reads right-to-left: groom on the right, bride on the left, ornament between. -#}
+  <text x="368" y="180" text-anchor="start" fill="url(#{{ gid }})" lang="ur">{{ groom.name_calligraphy }}</text>
+  <text x="272" y="180" text-anchor="end" fill="url(#{{ gid }})" lang="ur">{{ bride.name_calligraphy }}</text>
+  <text class="amp" x="320" y="172" text-anchor="middle" fill="url(#{{ gid }})">&amp;</text>
   <path class="fl" d="M300 268H150M340 268h150"/>
   <path class="fl-dot" d="M320 261l7 7-7 7-7-7Z"/>
 </svg>
